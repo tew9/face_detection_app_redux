@@ -14,7 +14,7 @@ import Particles from 'react-particles-js';
 const particleOptions = {
     "particles": {
         "number": {
-            "value": 200
+            "value": 50
         },
         "size": {
             "value": 2
