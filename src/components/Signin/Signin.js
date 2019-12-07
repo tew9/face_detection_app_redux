@@ -50,7 +50,7 @@ class Signin extends Component {
     
     const { onsignin } = this.props;
      return (
-      <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw7 shadow-1 center ">
+      <article className="br3 ba dark-gray b--white-20 mv4 w-100 w-50-m w-25-l mw7 shadow-3 center ">
         <main className="pa4 black-80">
           <div className="measure">
             
@@ -86,7 +86,7 @@ class Signin extends Component {
               />
             </div>
             <div className="lh-copy mt3">
-              <a href="#0" onClick = {() => onsignin('register') } className="f5 link black db grow">Sign up</a>
+              <a href="#0" onClick = {() => onsignin('register') } className="f5 link white db grow">Sign up</a>
             </div>
           </div>
         </main>

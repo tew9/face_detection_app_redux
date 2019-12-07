@@ -8,27 +8,8 @@ import Register from '../components/Register/Register';
 import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import './App.css';
 import Particles from 'react-particles-js';
-  
+import { particleOptions } from './particle.js'
 
-//initializig the particles
-const particleOptions = {
-    "particles": {
-        "number": {
-            "value": 200
-        },
-        "size": {
-            "value": 2
-        }
-    },
-    "interactivity": {
-        "events": {
-            "onhover": {
-                "enable": true,
-                "mode": "repulse"
-            }
-        }
-    }
-}
 
 //initializing the state.
 const initstate = {
