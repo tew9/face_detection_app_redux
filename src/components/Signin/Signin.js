@@ -1,4 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setEmailField, setPassField, setMessage } from './signin_action.js'
+
+
+const mapStateToProps = state => {
+  return {
+    signEmail: state.changeField.emailField,
+    signinPass: state.changeField.passField,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onEmailchange: (event) => dispatch(setEmailField(event.target.value)),
+    onPasschange: (event) => dispatch(setPassField(event.target.value)),
+  }
+}
 
 class Signin extends Component {
   constructor(props){
@@ -26,7 +43,7 @@ class Signin extends Component {
   }
 
   onsubmit = ()=>{
-     fetch('https://stark-woodland-64889.herokuapp.com/login', {
+     fetch('http://localhost:30002/login', {
       method: 'post',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
@@ -42,6 +59,7 @@ class Signin extends Component {
         this.setState({message: "Incorrect Username or Password"})
       }
     }).catch(err => {
+      console.log(err)
       this.setState({message: "please access the website another time"})
     });
   }
@@ -49,6 +67,8 @@ class Signin extends Component {
   render(){
     
     const { onsignin } = this.props;
+    //const {signEmail} = this.props;
+
      return (
       <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw7 shadow-1 center ">
         <main className="pa4 black-80">
@@ -62,7 +82,7 @@ class Signin extends Component {
                 <input className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 "
                 type="email" 
                 name="email-address" 
-                placeholder = {this.state.signEmail} 
+                placeholder = {this.signEmail} 
                 id="email-address"
                 onChange = {this.onEmailchange}
                  />
@@ -97,3 +117,4 @@ class Signin extends Component {
 }
 
 export default Signin;
+// export default connect(mapStateToProps, mapDispatchToProps)(Signin);
