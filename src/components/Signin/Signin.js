@@ -1,21 +1,4 @@
 import React, { Component } from 'react';
-//import { connect } from 'react-redux';
-//mport { setEmailField, setPassField, setMessage } from './signin_action.js'
-
-
-// const mapStateToProps = state => {
-//   return {
-//     signEmail: state.changeField.emailField,
-//     signinPass: state.changeField.passField,
-//   };
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onEmailchange: (event) => dispatch(setEmailField(event.target.value)),
-//     onPasschange: (event) => dispatch(setPassField(event.target.value)),
-//   }
-// }
 
 class Signin extends Component {
   constructor(props){
@@ -43,7 +26,7 @@ class Signin extends Component {
   }
 
   onsubmit = ()=>{
-     fetch('http://localhost:30002/login', {
+     fetch('https://stark-woodland-64889.herokuapp.com/login', {
       method: 'post',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify({
