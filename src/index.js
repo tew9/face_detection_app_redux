@@ -7,7 +7,7 @@ import './index.css';
 import App from './containers/App';
 import 'tachyons';
 import * as serviceWorker from './serviceWorker';
-import { changeFields } from './containers/app_reducer.js';
+import { changeFields } from './containers/state/app_reducer.js';
 
 //creating action tracker logger for debugging.
 const logger = createLogger();

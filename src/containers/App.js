@@ -10,7 +10,7 @@ import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import './App.css';
 import Particles from 'react-particles-js';
 import { particleOptions } from './particle.js'
-import { setInput, setRoute, dataReceptor } from './app_actions.js'
+import { setInput, setRoute, dataReceptor } from './state/app_actions.js'
 
 //mapping state to props.
 const mapStateToProps = state =>{
@@ -29,8 +29,6 @@ const mapDispatchToProps = (dispatch) => {
         onRoutechange: (route) => dispatch(setRoute(route))
     }
 }
->>>>>>> state
-
 
 //initializing the state.
 const initstate = {
@@ -117,7 +115,6 @@ class App extends Component {
     }
 
     render() {
-        console.log('loaded', this.props.user.name)
         const { imageURL, box } = this.state; 
         const { user, issignedIn, route } = this.props
         const { onInputChange, loadUsers, onRoutechange } = this.props;

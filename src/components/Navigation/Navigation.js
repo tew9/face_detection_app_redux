@@ -4,7 +4,7 @@ const Navigation = ({ name, changeRoute, issignedIn}) => {
     if(issignedIn){
       return( 
         <nav style={{display:'flex', justifyContent: 'flex-end', margin: '3px'}}>
-            <p className='f4  pa3 dib black ' > { name } </p>
+            <p className='f3  pa3 dib white dim ' > { name } </p>
             <div>
               <p onClick = {() => changeRoute('signin')} className='link dim underline f4  dib white pa3 pointer'>{'Sign out'}
               </p>
