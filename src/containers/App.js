@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Navigation from '../components/Navigation/Navigation';
 import Logo from '../components/Logo/Logo';
 import ImageLinkForm from '../components/ImageLinkForm/ImageLinkForm';
@@ -8,23 +9,38 @@ import Register from '../components/Register/Register';
 import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import './App.css';
 import Particles from 'react-particles-js';
+<<<<<<< HEAD
 import { particleOptions } from './particle.js'
+||||||| 3f9d8fd
+  
+=======
+import { setInput, setRoute, dataReceptor } from './app_actions.js'
+
+//mapping state to props.
+const mapStateToProps = state =>{
+    return({
+        input: state.input,
+        route: state.route,
+        issignedIn: state.issignedIn,
+        user: state.user,
+    })
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onInputChange: (event) => dispatch(setInput(event.target.value)),
+        loadUsers: (data) => dispatch(dataReceptor(data)),
+        onRoutechange: (route) => dispatch(setRoute(route))
+    }
+}
+>>>>>>> state
 
 
 //initializing the state.
 const initstate = {
-        input: '',
         imageURL: '',
-        box:{},
+        box: {},
         route: 'signin',
-        issignedIn: false,
-        user:{
-            id: '',
-            email: '',
-            name: '',
-            entries: 0,
-            joined: ''
-    }
 }
 
 //defining the App
@@ -51,32 +67,32 @@ class App extends Component {
         this.setState({box: boxnumber})
     }
 
-    onInputChange = (event) => {
-        this.setState({input: event.target.value})
-    }
+    // onInputChange = (event) => {
+    //     this.setState({input: event.target.value})
+    // }
 
     onButtonClick = () => {
-        this.setState({imageURL: this.state.input})
-        fetch('https://stark-woodland-64889.herokuapp.com/imageurl', {
+        this.setState({imageURL: this.props.input})
+        fetch('http://localhost:30002/imageurl', {
             method: 'post',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({
-              input: this.state.input,
+              input: this.props.input,
             })
         }).then(response => response.json())
         .then(response => {
             //if we get response from clarified, update the rank(entries)
             if(response){
-                fetch('https://stark-woodland-64889.herokuapp.com/rank', {
+                fetch('http://localhost:30002/rank', {
                     method: 'put',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({
-                      id: this.state.user.id,
+                      id: this.props.user.id,
                     })
                 }).then(response => response.json())
                 .then(entries => {
                     if(entries){
-                        this.setState(Object.assign(this.state.user, {entries: entries}))
+                        this.setState(Object.assign(this.props.user, {entries: entries}))
                     }
                 })
             }
@@ -84,18 +100,18 @@ class App extends Component {
         }).catch(err => console.log(err));
     }
 
-    loadUsers = (data) =>{
-        this.setState({ user:{
-            id: data.id,
-            email: data.email,
-            name: data.name,
-            entries: data.entries,
-            joined: data.joined,
-            }
-        });
-    }
+    // loadUsers = (data) =>{
+    //     this.setState({ user:{
+    //         id: data.id,
+    //         email: data.email,
+    //         name: data.name,
+    //         entries: data.entries,
+    //         joined: data.joined,
+    //         }
+    //     });
+    // }
 
-    onRoutechange = (route) =>{
+     onRoutechange = (route) =>{
         if(route === 'signin'){
             this.setState(initstate);
         }else if(route === 'home'){
@@ -105,27 +121,30 @@ class App extends Component {
     }
 
     render() {
-        const { imageURL, box, route, issignedIn} = this.state;
+        console.log('loaded', this.props.user.name)
+        const { imageURL, box } = this.state; 
+        const { user, issignedIn, route } = this.props
+        const { onInputChange, loadUsers, onRoutechange } = this.props;
       return(
         <div className='App'>
             <Particles className='Particle'
                 params = { particleOptions }
             />
             <Navigation 
-                name = {this.state.user.name}
-                changeRoute = { this.onRoutechange }
+                name = { user.name}
+                changeRoute = { onRoutechange }
                 issignedIn = { issignedIn }
             />
             <Logo/>
             {
                 route === 'home'
                 ?<>
-                    <Rank name = { this.state.user.name} 
-                    entries={ this.state.user.entries } 
+                    <Rank name = { user.name} 
+                    entries={ user.entries } 
                     />
 
                     <ImageLinkForm 
-                        onInputChange = {this.onInputChange}
+                        onInputChange = {onInputChange}
                         onButtonClick = {this.onButtonClick}/>
                     <FaceRecognition
                         image = {imageURL}
@@ -133,8 +152,8 @@ class App extends Component {
                 </>
                 :(
                     route === 'signin'
-                    ?   <Signin loadUsers = { this.loadUsers } onsignin = { this.onRoutechange } />
-                    :   <Register loadUsers = { this.loadUsers } onsignup = { this.onRoutechange }/>   
+                    ?   <Signin loadUsers = { loadUsers } onsignin = { onRoutechange } />
+                    :   <Register loadUsers = { loadUsers } onsignup = { onRoutechange }/>   
                  )
             }
         </div>
@@ -142,5 +161,6 @@ class App extends Component {
     }
   }
   
-  export default App;
+//   export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
   

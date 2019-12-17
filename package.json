@@ -13,6 +13,7 @@
     "react-tilt": "^0.1.4",
     "react-tilted": "^1.0.0",
     "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
     "tachyon": "0.0.11",
     "tachyons": "^4.11.1"
   },
