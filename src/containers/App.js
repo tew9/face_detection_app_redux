@@ -67,7 +67,7 @@ class App extends Component {
 
     onButtonClick = () => {
         this.setState({imageURL: this.props.input})
-        fetch('http://localhost:30002/imageurl', {
+        fetch('https://stark-woodland-64889.herokuapp.com/imageurl', {
             method: 'post',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({
@@ -77,7 +77,7 @@ class App extends Component {
         .then(response => {
             //if we get response from clarified, update the rank(entries)
             if(response){
-                fetch('http://localhost:30002/rank', {
+                fetch('https://stark-woodland-64889.herokuapp.com/rank', {
                     method: 'put',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({
