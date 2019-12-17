@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { setEmailField, setPassField, setMessage } from './signin_action.js'
+//import { connect } from 'react-redux';
+//mport { setEmailField, setPassField, setMessage } from './signin_action.js'
 
 
-const mapStateToProps = state => {
-  return {
-    signEmail: state.changeField.emailField,
-    signinPass: state.changeField.passField,
-  };
-}
+// const mapStateToProps = state => {
+//   return {
+//     signEmail: state.changeField.emailField,
+//     signinPass: state.changeField.passField,
+//   };
+// }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onEmailchange: (event) => dispatch(setEmailField(event.target.value)),
-    onPasschange: (event) => dispatch(setPassField(event.target.value)),
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onEmailchange: (event) => dispatch(setEmailField(event.target.value)),
+//     onPasschange: (event) => dispatch(setPassField(event.target.value)),
+//   }
+// }
 
 class Signin extends Component {
   constructor(props){
@@ -66,7 +66,7 @@ class Signin extends Component {
   
   render(){
     
-    const { onsignin } = this.props;
+    const { onsignin } = this.state;
     //const {signEmail} = this.props;
 
      return (
@@ -93,6 +93,7 @@ class Signin extends Component {
                 type="password" 
                 name="password"  
                 id="password"
+                onKeyPress = { this.onEnter }
                 onChange = {this.onPasschange}
                 />
               </div>

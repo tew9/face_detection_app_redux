@@ -9,7 +9,7 @@ import Register from '../components/Register/Register';
 import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import './App.css';
 import Particles from 'react-particles-js';
-import { setInput, setRoute, setIssignedIn, dataReceptor } from './app_actions.js'
+import { setInput, setRoute, dataReceptor } from './app_actions.js'
 
 //mapping state to props.
 const mapStateToProps = state =>{
@@ -17,16 +17,15 @@ const mapStateToProps = state =>{
         input: state.input,
         route: state.route,
         issignedIn: state.issignedIn,
-        imageURL: state.imageURL,
-        box:state.box,
-        users: state.user,
+        user: state.user,
     })
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onInputChange: (event) => dispatch(setInput(event.target.value)),
-        loadUsers: (data) => dispatch(dataReceptor(data))
+        loadUsers: (data) => dispatch(dataReceptor(data)),
+        onRoutechange: (route) => dispatch(setRoute(route))
     }
 }
 
@@ -52,18 +51,9 @@ const particleOptions = {
 
 //initializing the state.
 const initstate = {
-        input: '',
         imageURL: '',
-        box:{},
+        box: {},
         route: 'signin',
-        issignedIn: false,
-        user:{
-            id: '',
-            email: '',
-            name: '',
-            entries: 0,
-            joined: ''
-    }
 }
 
 //defining the App
@@ -110,13 +100,12 @@ class App extends Component {
                     method: 'put',
                     headers: {'content-type': 'application/json'},
                     body: JSON.stringify({
-                      id: this.props.users.id,
+                      id: this.props.user.id,
                     })
                 }).then(response => response.json())
                 .then(entries => {
-                    console.log(this.props.users.id)
                     if(entries){
-                        this.setState(Object.assign(this.state.user, {entries: entries}))
+                        this.setState(Object.assign(this.props.user, {entries: entries}))
                     }
                 })
             }
@@ -135,7 +124,7 @@ class App extends Component {
     //     });
     // }
 
-    onRoutechange = (route) =>{
+     onRoutechange = (route) =>{
         if(route === 'signin'){
             this.setState(initstate);
         }else if(route === 'home'){
@@ -145,25 +134,26 @@ class App extends Component {
     }
 
     render() {
-        console.log('loaded', this.props.users)
-        const { imageURL, box, route, issignedIn} = this.state; 
-        const { onInputChange, loadUsers } = this.props;
+        console.log('loaded', this.props.user.name)
+        const { imageURL, box } = this.state; 
+        const { user, issignedIn, route } = this.props
+        const { onInputChange, loadUsers, onRoutechange } = this.props;
       return(
         <div className='App'>
             <Particles className='Particle'
                 params = { particleOptions }
             />
             <Navigation 
-                name = {this.state.user.name}
-                changeRoute = { this.onRoutechange }
+                name = { user.name}
+                changeRoute = { onRoutechange }
                 issignedIn = { issignedIn }
             />
             <Logo/>
             {
                 route === 'home'
                 ?<>
-                    <Rank name = { this.state.user.name} 
-                    entries={ this.state.user.entries } 
+                    <Rank name = { user.name} 
+                    entries={ user.entries } 
                     />
 
                     <ImageLinkForm 
@@ -175,8 +165,8 @@ class App extends Component {
                 </>
                 :(
                     route === 'signin'
-                    ?   <Signin loadUsers = { loadUsers } onsignin = { this.onRoutechange } />
-                    :   <Register loadUsers = { this.loadUsers } onsignup = { this.onRoutechange }/>   
+                    ?   <Signin loadUsers = { loadUsers } onsignin = { onRoutechange } />
+                    :   <Register loadUsers = { loadUsers } onsignup = { onRoutechange }/>   
                  )
             }
         </div>

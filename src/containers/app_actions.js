@@ -1,7 +1,6 @@
 import {
     INPUT_CHANGE,
     CHANGE_ROUTE,
-    ISSIGNED_IN,
     DATA_STATUS
 } from './app_contstants.js'
 
@@ -12,16 +11,10 @@ export const setInput = (text) => {
     });
 }
 
-export const setRoute = (text) => {
+export const setRoute = (route) => {
     return({
      type: CHANGE_ROUTE,
-     payload: text,
-     });
- }
-
- export const setIssignedIn = () => {
-    return({
-     type: ISSIGNED_IN,
+     payload: route,
      });
  }
 

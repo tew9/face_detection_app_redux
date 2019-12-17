@@ -1,14 +1,11 @@
 import {
     INPUT_CHANGE,
     CHANGE_ROUTE,
-    ISSIGNED_IN,
     DATA_STATUS
 } from './app_contstants.js'
 
 const initstate = {
-    input: '',
-    imageURL: '',
-    box:{},
+    input: '', 
     route: 'signin',
     issignedIn: false,
     user:{
@@ -24,10 +21,6 @@ export const changeFields = (state = initstate, action = {}) =>{
     switch(action.type){
         case INPUT_CHANGE:
             return Object.assign({}, state, {input: action.payload })
-        case CHANGE_ROUTE:
-            return Object.assign({}, state, {route: action.payload })
-        case ISSIGNED_IN:
-            return Object.assign({}, state, {issignedIn: true })
         case DATA_STATUS:
             return Object.assign({}, state, {id: action.payload.id,
                                             email: action.payload.email, 
@@ -36,6 +29,16 @@ export const changeFields = (state = initstate, action = {}) =>{
                                             joined: action.payload.joined,
                                             user: action.payload,
                                         })
+        case CHANGE_ROUTE:
+            if(action.payload === 'signin'){
+                return Object.assign({}, state, { issignedIn: false, route: 'signin'})
+            }else if(action.payload === 'home'){
+                return Object.assign({}, state, { issignedIn: true, route: 'home'})
+            }else if(action.payload === 'register'){
+                return Object.assign({}, state, { issignedIn: false, route: 'register'})
+            }else {
+                return state;
+            }
         default:
             return state;
     }

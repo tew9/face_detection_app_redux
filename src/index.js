@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import './index.css';
 import App from './containers/App';
@@ -10,10 +10,12 @@ import * as serviceWorker from './serviceWorker';
 import { changeFields } from './containers/app_reducer.js';
 
 //creating action tracker logger for debugging.
-//const logger = createLogger();
+const logger = createLogger();
 
+//combine the reducers first.
+// const rootState = combineReducers({ changeFields, changeRoute })
 //creating store
-const store = createStore(changeFields) //applyMiddleware(logger))
+const store = createStore( changeFields, applyMiddleware(logger));
 
 ReactDOM.render(
             <Provider store = { store }>
