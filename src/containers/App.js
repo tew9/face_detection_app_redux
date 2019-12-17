@@ -9,11 +9,7 @@ import Register from '../components/Register/Register';
 import FaceRecognition from '../components/FaceRecognition/FaceRecognition';
 import './App.css';
 import Particles from 'react-particles-js';
-<<<<<<< HEAD
 import { particleOptions } from './particle.js'
-||||||| 3f9d8fd
-  
-=======
 import { setInput, setRoute, dataReceptor } from './app_actions.js'
 
 //mapping state to props.
